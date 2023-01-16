@@ -39,8 +39,8 @@ http {
     include /etc/nginx/conf.d/*.conf;
 
     server {
-        listen       ${MIRROR_REGISTRY_HTTP_PORT} default_server;
-        listen       [::]:${MIRROR_REGISTRY_HTTP_PORT} default_server;
+        listen       ${MY_MIRROR_REGISTRY_HTTP_PORT} default_server;
+        listen       [::]:${MY_MIRROR_REGISTRY_HTTP_PORT} default_server;
         server_name  _;
         root         /usr/share/nginx/html;
 
@@ -50,7 +50,7 @@ http {
         location / {
         }
 
-        location ${MIRROR_DIR} {
+        location ${MY_MIRROR_DIR} {
 	    autoindex on;
         }
 

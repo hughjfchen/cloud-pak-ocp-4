@@ -22,14 +22,9 @@ begin_banner "Top level" "create an OCP mirror registry"
         my_exit "macOS not supported yet." 222
         ;;
       rhel|centos)
-        if [ "X$THE_DISTRIBUTION_VERSION" != "X8" ]; then
-          my_exit "only support centos/RHEL 8.x" 126
+        if [ "X$THE_DISTRIBUTION_VERSION" != "X7" ] && [ "X$THE_DISTRIBUTION_VERSION" != "X8" ]; then
+          my_exit "only support centos/RHEL 7.x or 8.x" 126
         fi
-
-        # the pull secret file is needed to go forward
-        #if [ -z $pull_secret_file ];then
-        #   pull_secret_file="/tmp/ocp_pullsecret.json"
-        #fi
 
         if [ ! -e "${pull_secret_file-/tmp/ocp_pullsecret.json}" ];then
            echo "Pull secret file ${pull_secret_file-/tmp/ocp_pullsecret.json} does not exist, please create the file or set the pull_secret_file environment variable to point to the file that holds the pull secret."
@@ -146,14 +141,15 @@ begin_banner "Top level" "create an OCP mirror registry"
 
         # generate nginx config based on template and variables
         cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak.by.mirror.registry
-        envsubst < "${SCRIPT_ABS_PATH}/nginx.conf.tpl" > /etc/nginx/nginx.conf
+        envsubst '$MY_MIRROR_REGISTRY_HTTP_PORT,$MY_MIRROR_DIR' < "${SCRIPT_ABS_PATH}/nginx.conf.tpl" > /etc/nginx/nginx.conf
 
         # make the dir part of the MIRROR_DIR under the nginx default root dir first
         # so that link succeed
         MY_NGINX_DEFAULT_DOC_ROOT="/usr/share/nginx/html"
-        MY_MIRROR_DIR_DIR_PART=$(dirname "$MY_MIRROR_DIR")
-        mkdir -p "$MY_NGINX_DEFAULT_DOC_ROOT/$MY_MIRROR_DIR_DIR_PART"
-        ln -s "${MY_MIRROR_DIR}" "MY_NGINX_DEFAULT_DOC_ROOT/${MY_MIRROR_DIR}"
+        MY_MIRROR_DIR_REL_DIR_PART=$(dirname "$MY_MIRROR_DIR"|sed 's:^/::g')
+        MY_MIRROR_DIR_REL=$(echo "$MY_MIRROR_DIR"|sed 's:^/::g')
+        mkdir -p "$MY_NGINX_DEFAULT_DOC_ROOT/$MY_MIRROR_DIR_REL_DIR_PART"
+        ln -s "${MY_MIRROR_DIR}" "$MY_NGINX_DEFAULT_DOC_ROOT/${MY_MIRROR_DIR_REL}"
         systemctl restart nginx;systemctl enable nginx
 
         # check the http list entries

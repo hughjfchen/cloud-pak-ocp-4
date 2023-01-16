@@ -69,7 +69,6 @@ fi
 
 pushd $SCRIPT_DIR > /dev/null
 
-# Run ansible playbook
 inventory_file=$(realpath $INVENTORY_FILE_PARAM)
 
 # Utilities function
@@ -102,6 +101,7 @@ if [ "X$is_airgap_install" == "XTrue" ]; then
   export pull_secret_file="${air_gapped_download_dir}/ocp4_install/ocp_pullsecret.json"
 fi
 
+# Run ansible playbook
 ansible-playbook -i $inventory_file playbooks/ocp4.yaml \
   -e ansible_ssh_pass=$root_password \
   -e ocp_admin_password=$ocp_admin_password \

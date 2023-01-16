@@ -22,8 +22,8 @@ begin_banner "Top level" "Init bastion machine"
         my_exit "macOS not supported yet." 222
 	     ;;
       rhel|centos)
-        if [ "X$THE_DISTRIBUTION_VERSION" != "X8" ]; then
-          my_exit "only support centos/RHEL 8.x" 126
+        if [ "X$THE_DISTRIBUTION_VERSION" != "X7" ] && [ "X$THE_DISTRIBUTION_VERSION" != "X8" ]; then
+          my_exit "only support centos/RHEL 7.x or 8.x" 126
         fi
 
         systemctl status firewalld > /dev/null 2>&1 && systemctl stop firewalld && systemctl disable firewalld
