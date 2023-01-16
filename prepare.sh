@@ -84,7 +84,7 @@ my_exit () {
 # add airgap install support if air_gapped_install=True
 is_airgap_install=$(grep 'air_gapped_install=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
 if [ "X$is_airgap_install" == "XTrue" ]; then
-  domain_name=$(grep 'domain_nam=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
+  domain_name=$(grep 'domain_name=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
   air_gapped_registry_server=$(grep 'air_gapped_registry_server=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
   air_gapped_download_dir=$(grep 'air_gapped_download_dir=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
   http_server_port=$(grep 'http_server_port=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
