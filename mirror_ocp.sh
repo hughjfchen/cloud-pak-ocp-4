@@ -153,7 +153,7 @@ begin_banner "Top level" "create an OCP mirror registry"
         systemctl restart nginx;systemctl enable nginx
 
         # check the http list entries
-        curl -L -s "http://${MY_REGISTRY_SERVER}:${MY_MIRROR_REGISTRY_HTTP_PORT}${MY_MIRROR_DIR}" --list-only
+        curl -L -s "http://${MY_REGISTRY_SERVER}:${MY_MIRROR_REGISTRY_HTTP_PORT}/${MY_MIRROR_DIR_REL}" --list-only
 
         # generate a systemd service the for mirror registry
         #podman generate systemd mirror-registry -n > /etc/systemd/system/container-mirror-registry.service
