@@ -148,7 +148,7 @@ begin_banner "Top level" "create an OCP mirror registry"
         # make the dir part of the MIRROR_DIR under the nginx default root dir first
         # so that link succeed
         MY_NGINX_DEFAULT_DOC_ROOT="/usr/share/nginx/html"
-        MY_MIRROR_DIR_REL_DIR_PART=$(dirname $(dirname "$MY_MIRROR_DIR")|sed 's:^/::g')
+        MY_MIRROR_DIR_REL_DIR_PART=$(dirname "$MY_MIRROR_DIR"|sed 's:^/::g')
         MY_MIRROR_DIR_REL=$(echo "$MY_MIRROR_DIR"|sed 's:^/::g')
         [ "X$MY_MIRROR_DIR_REL_DIR_PART" != "X" ] && mkdir -p "$MY_NGINX_DEFAULT_DOC_ROOT/$MY_MIRROR_DIR_REL_DIR_PART"
         ln -s "${MY_MIRROR_DIR}" "$MY_NGINX_DEFAULT_DOC_ROOT/${MY_MIRROR_DIR_REL}"
