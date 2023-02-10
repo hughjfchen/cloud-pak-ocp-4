@@ -101,6 +101,11 @@ if [ "X$is_airgap_install" == "XTrue" ]; then
   export pull_secret_file="${air_gapped_download_dir}/ocp4_install/ocp_pullsecret.json"
 fi
 
+# clean up the ocp_install_dir before generate installation artifects
+# because the certificates may be expired
+ocp_install_dir=$(grep 'ocp_install_dir=' "$inventory_file"|grep -v '#'|awk -F'=' '{print $2}'|tr -d '"')
+[ -d "$ocp_install_dir" ] && rm -fr "$ocp_install_dir"
+
 # Run ansible playbook
 ansible-playbook -i $inventory_file playbooks/ocp4.yaml \
   -e ansible_ssh_pass=$root_password \
