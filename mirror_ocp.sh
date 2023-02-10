@@ -120,9 +120,7 @@ begin_banner "Top level" "create an OCP mirror registry"
         update-ca-trust
 
         # list the mirrored registry catalog to verify it's working
-        set -x
         curl -u "$MY_REGISTRY_USER:$MY_REGISTRY_PASSWORD" "https://${MY_LOCAL_REGISTRY}/v2/_catalog"
-        set +x
 
         # generate the pull secret for the mirroed registry
         AUTH=$(echo -n "$MY_REGISTRY_USER:$MY_REGISTRY_PASSWORD" | base64 -w0)
