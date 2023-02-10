@@ -54,11 +54,11 @@ ocp_install_dir="/ocp4_install"
 air_gapped_install=True
 air_gapped_registry_server="registry.mycom.com"
 air_gapped_source_ocp_release="quay.io/openshift-release-dev/ocp-release"
-air_gapped_mirror_ocp_release="{{air_gapped_registry_server}}:5000/ocp4/openshift4"
+air_gapped_mirror_ocp_release="registry.mycom.com:5000/ocp4/openshift4"
 air_gapped_source_ocp_release_dev="quay.io/openshift-release-dev/ocp-v4.0-art-dev"
-air_gapped_mirror_ocp_release_dev="{{air_gapped_registry_server}}:5000/ocp4/openshift4"
+air_gapped_mirror_ocp_release_dev="registry.mycom.com:5000/ocp4/openshift4"
 air_gapped_download_dir="/ocp4_downloads"
-air_gapped_registry_trust_bundle_file="{{air_gapped_download_dir}}/registry/certs/registry.crt"
+air_gapped_registry_trust_bundle_file="registry.mycom.com/registry/certs/registry.crt"
 
 #
 # OpenShift download URLs. These are the URLs used by the prepare script to download
@@ -66,8 +66,8 @@ air_gapped_registry_trust_bundle_file="{{air_gapped_download_dir}}/registry/cert
 # openshift_release property. The download scripts automatically select the relevant packages from the URL.
 #
 openshift_release="4.8"
-openshift_base_url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-{{openshift_release}}/"
-rhcos_base_url="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/{{openshift_release}}/latest/"
+openshift_base_url="http://{{air_gapped_registry_server}}:{{http_server_port}}/{{air_gapped_download_dir}}/clients/"
+rhcos_base_url="http://{{air_gapped_registry_server}}:{{http_server_port}}/{{air_gapped_download_dir}}/dependencies/"
 openshift_client_package_pattern=".*(openshift-client.*tar.gz).*"
 openshift_install_package_pattern=".*(openshift-install-linux.*tar.gz).*"
 rhcos_metal_package_pattern=".*(rhcos.*metal.*raw.gz).*"
