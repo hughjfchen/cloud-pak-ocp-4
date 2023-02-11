@@ -34,10 +34,10 @@ begin_banner "Top level" "Init bastion machine"
                        haproxy httpd-tools jq libvirt net-tools nfs-utils nginx podman \
                        python3 python3-netaddr python3-passlib python3-pip python3-policycoreutils python3-pyvmomi python3-requests \
                        screen sos syslinux-tftpboot wget yum-utils
-            )
+            LATEST_PIP=$(find /usr/bin -name 'pip*'|sort|tail -1)
+            "$LATEST_PIP" install passlib
 
-        LATEST_PIP=$(find /usr/bin -name 'pip*'|sort|tail -1)
-        "$LATEST_PIP" install passlib
+            )
 
 	     ;;
       *) ;;
